@@ -17,8 +17,15 @@ pip install beautifulsoup4
 
 ## Usage
 
-From within the directory run: 
+Run the script to print all links on the webpage to the terminal
 
 ```
 python3 crawl.py crawl "http://example.com"
 ```
+
+Print all links to a csv 
+
+```
+python3 crawl.py crawl "http://example.com" --output
+``` 
+This will print all the links in the terminal and create crawl.csv in the root

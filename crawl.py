@@ -5,6 +5,10 @@ import io
 import requests
 from bs4 import BeautifulSoup
 
+# Config
+output_path = "crawl.csv"
+output_csv = False
+
 # Set the request headers
 headers = requests.utils.default_headers()
 headers.update({ 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'})
@@ -22,6 +26,9 @@ def crawl( url ) :
 
     # Print each link to the console 
     for link in links : 
+        if( output_csv ) :
+            # Write the link on a new line in output csv
+            write_to_csv( link )
         print( link )
 
 # Download the webpage
@@ -46,5 +53,13 @@ def get_anchors( soup ) :
 
     return page_anchors    
 
+# write to csv
+def write_to_csv(line):
+    f = open(output_path,'a')
+    f.write(line + '\n')
+    f.close()             
+
 if __name__ == '__main__':
+    if(sys.argv[3] == '--output'):
+        output_csv=True
     globals()[sys.argv[1]](sys.argv[2])
