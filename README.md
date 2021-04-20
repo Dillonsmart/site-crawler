@@ -23,9 +23,22 @@ Run the script to print all links on the webpage to the terminal
 python3 crawl.py crawl "http://example.com"
 ```
 
-Print all links to a csv 
+### Output all URLs to a CSV
 
 ```
 python3 crawl.py crawl "http://example.com" --output
 ``` 
-This will print all the links in the terminal and create crawl.csv in the root
+Using the `--output` flag will print all the links in the terminal and create crawl.csv in the root
+
+### Limit to only onsite URLs
+
+```
+python3 crawl.py crawl "http://example.com" --onsite
+``` 
+Using the `--onsite` will ignore any URLs which do NOT contain the crawl URL, in this case if the link does not contain `http://example.com` the script will skip over this index.
+
+### Chaining Options 
+```
+python3 crawl.py crawl "http://example.com" --output-onsite
+``` 
+Optional flags can be chained, seperated by a single hyphen. The options string must begin with 2 hyphens.

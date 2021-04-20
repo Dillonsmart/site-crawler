@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 # Config
 output_path = "crawl.csv"
 output_csv = False
+onsite_only = False
 
 # Set the request headers
 headers = requests.utils.default_headers()
@@ -25,10 +26,16 @@ def crawl( url ) :
     links = get_anchors( soup )
 
     # Print each link to the console 
-    for link in links : 
+    for link in links :             
+
+        # If link must be an onsite link
+        if(onsite_only and url not in link) :
+            continue
+        
+        # If output True, write new line to CSV
         if( output_csv ) :
-            # Write the link on a new line in output csv
             write_to_csv( link )
+
         print( link )
 
 # Download the webpage
@@ -60,6 +67,10 @@ def write_to_csv(line):
     f.close()             
 
 if __name__ == '__main__':
-    if(sys.argv[3] == '--output'):
+    if("output" in sys.argv[3]):
         output_csv=True
+
+    if("onsite" in sys.argv[3]):
+        onsite_only=True
+
     globals()[sys.argv[1]](sys.argv[2])
