@@ -30,7 +30,7 @@ def crawl( url ) :
     for link in links :             
 
         # If link must be an onsite link
-        if(onsite_only and url not in link and url ) :
+        if(onsite_only and url not in link and link[0] != "/" ) :
             continue
         
         # If output True, write new line to CSV
