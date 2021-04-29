@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 output_path = "crawl.csv"
 output_csv = False
 onsite_only = False
+timeout = 5
 
 # Set the request headers
 headers = requests.utils.default_headers()
@@ -17,7 +18,7 @@ headers.update({ 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0)
 def crawl( url ) : 
     
     # Download the html
-    html = requests.get(url, headers)
+    html = requests.get(url, headers, timeout = timeout)
     
     # Parse and prettify the html 
     soup = BeautifulSoup(html.content, 'html.parser')
@@ -29,7 +30,7 @@ def crawl( url ) :
     for link in links :             
 
         # If link must be an onsite link
-        if(onsite_only and url not in link) :
+        if(onsite_only and url not in link and url ) :
             continue
         
         # If output True, write new line to CSV
