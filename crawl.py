@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 output_path = "crawl.csv"
 output_csv = False
 onsite_only = False
+exclude_social = False
 timeout = 5
 
 # Set the request headers
@@ -32,7 +33,7 @@ def crawl( url ) :
         # If link must be an onsite link
         if(onsite_only and url not in link and link[0] != "/" ) :
             continue
-        
+
         # If output True, write new line to CSV
         if( output_csv ) :
             write_to_csv( link )
@@ -68,10 +69,12 @@ def write_to_csv(line):
     f.close()             
 
 if __name__ == '__main__':
-    if("output" in sys.argv[3]):
-        output_csv=True
+    try:
+        if("output" in sys.argv[3]):
+            output_csv=True
 
-    if("onsite" in sys.argv[3]):
-        onsite_only=True
-
+        if("onsite" in sys.argv[3]):
+            onsite_only=True
+    except IndexError:
+        print("No flag options were found.")
     globals()[sys.argv[1]](sys.argv[2])
